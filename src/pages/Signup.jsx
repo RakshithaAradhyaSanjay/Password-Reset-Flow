@@ -49,7 +49,7 @@ const Signup = () => {
     email: Yup.string().email("Invalid email address").required("Required"),
     password: Yup.string()
       .required("Required")
-      .matches(/^(?=.*[a-zA-Z])(?=.*\d).{8,}$/, "Make Strong password"),
+      .matches(/^(?=.*[a-zA-Z])(?=.*\d).{12,}$/, "Make Strong password"),
   });
 
   const handleSignup = async (values) => {
