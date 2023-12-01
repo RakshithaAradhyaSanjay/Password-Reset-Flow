@@ -43,9 +43,11 @@ const Signin = () => {
   };
 
   const validationSchema = Yup.object({
-    email: Yup.string().email("Invalid email address").required("Required"),
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email Required"),
     password: Yup.string()
-      .required("Required")
+      .required("Password Required")
       .matches(/^(?=.*[a-zA-Z])(?=.*\d).{12,}$/, "Make Strong password"),
   });
 

@@ -3,6 +3,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Box, Typography, Container } from "@mui/material";
+import { toast } from "react-toastify";
 
 const Home = () => {
   const userData = JSON.parse(sessionStorage.getItem("userData"));
@@ -11,6 +12,9 @@ const Home = () => {
   const handleLogout = () => {
     sessionStorage.removeItem("userData");
     navigate("/signin");
+    toast.success("Logout successful", {
+      position: toast.POSITION.TOP_CENTER,
+    });
   };
 
   const handleSignIn = () => {

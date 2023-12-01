@@ -44,12 +44,12 @@ const ResetPasswordPage = () => {
   const [loading, setLoading] = useState(false);
 
   const validationSchema = Yup.object({
-    OTP: Yup.string().required("Required"),
+    OTP: Yup.string().required("OTP Required"),
     password: Yup.string()
-      .required("Required")
+      .required("Password Required")
       .matches(/^(?=.*[a-zA-Z])(?=.*\d).{12,}$/, "Make Strong password"),
     confirmPassword: Yup.string()
-      .required("Required")
+      .required("ConfirmPassword Required")
       .oneOf([Yup.ref("password"), null], "Passwords must match"),
   });
 
