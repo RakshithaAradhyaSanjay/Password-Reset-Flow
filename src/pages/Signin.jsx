@@ -51,30 +51,31 @@ const Signin = () => {
     try {
       const response = await AxiosService.post("/user/signin", values);
       console.log(response.data);
-      if (response.data.message) {
-        toast.success(response.data.message, {
-          position: toast.POSITION.TOP_CENTER,
-        });
+
+      const { message, token, userData } = response.data;
+
+      if (message) {
+        if (response.status === 200) {
+          toast.success(message, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+          sessionStorage.setItem("token", token);
+          sessionStorage.setItem("userData", JSON.stringify(userData));
+          navigate("/home");
+        } else if (response.status === 404 || response.status === 401) {
+          toast.error(message, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
       }
-      sessionStorage.setItem("token", response.data.token);
-      sessionStorage.setItem(
-        "userData",
-        JSON.stringify(response.data.userData)
-      );
-      navigate("/home");
     } catch (error) {
       console.error(error.response.data);
-      if (error.response.data.message) {
-        toast.error(error.response.data.message, {
-          position: toast.POSITION.TOP_CENTER,
-        });
-      } else {
-        toast.error("Invalid email or password. Please try again.", {
-          position: toast.POSITION.TOP_CENTER,
-        });
-      }
+      toast.error("Failed to sign in. Please try again.", {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   };
+  
 
   return (
     <ThemeProvider theme={darkTheme}>
