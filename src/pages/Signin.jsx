@@ -70,8 +70,8 @@ const Signin = () => {
           toast.error(error.response.data.message, {
             position: toast.POSITION.TOP_CENTER,
           });
-        } else if (error.response.status === 404) {
-          toast.error("User not found. Please check your email.", {
+        } else if (error.response.data.message === 404) {
+          toast.error({
             position: toast.POSITION.TOP_CENTER,
           });
         } else {
