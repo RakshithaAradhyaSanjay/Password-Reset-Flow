@@ -73,8 +73,8 @@ const Signin = () => {
           toast.error(error.response.data.message, {
             position: toast.POSITION.TOP_CENTER,
           });
-        } else if (error.response.data.message === 404) {
-          toast.error({
+        } else if (error.response.status === 404) {
+          toast.error(error.response.data.message,{
             position: toast.POSITION.TOP_CENTER,
           });
         } else {
