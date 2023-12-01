@@ -55,14 +55,14 @@ const Signin = () => {
       const { message, token, userData } = response.data;
 
       if (message) {
-        if (response.status === 200) {
+        if (response.status >= 200 && response.status < 300) {
           toast.success(message, {
             position: toast.POSITION.TOP_CENTER,
           });
           sessionStorage.setItem("token", token);
           sessionStorage.setItem("userData", JSON.stringify(userData));
           navigate("/home");
-        } else if (response.status === 404 || response.status === 401) {
+        } else if (response.status >= 400) {
           toast.error(message, {
             position: toast.POSITION.TOP_CENTER,
           });
@@ -75,6 +75,7 @@ const Signin = () => {
       });
     }
   };
+  
   
 
   return (
