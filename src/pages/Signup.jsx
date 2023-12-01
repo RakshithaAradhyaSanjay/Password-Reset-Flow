@@ -16,6 +16,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Box from "@mui/material/Box";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const darkTheme = createTheme({
   palette: {
@@ -35,6 +36,7 @@ const darkTheme = createTheme({
 const Signup = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const initialValues = {
     firstName: "",
@@ -54,6 +56,7 @@ const Signup = () => {
 
   const handleSignup = async (values) => {
     try {
+      setLoading(true);
       const response = await AxiosService.post("/user/signup", values);
       const { message } = response.data;
       console.log(message);
@@ -68,6 +71,8 @@ const Signup = () => {
       toast.error(errorMessage, {
         position: toast.POSITION.TOP_CENTER,
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -174,8 +179,9 @@ const Signup = () => {
               variant='contained'
               type='submit'
               style={{ marginTop: "20px" }}
+              disabled={loading}
             >
-              Signup
+              {loading ? <CircularProgress size={24} /> : "Signup"}
             </Button>
             <p style={{ marginTop: "20px" }}>
               Already have an account? <Link to='/signin'>Signin</Link>

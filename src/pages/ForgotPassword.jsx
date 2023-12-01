@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
@@ -28,6 +29,7 @@ const darkTheme = createTheme({
 const ForgotPasswordPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -35,18 +37,23 @@ const ForgotPasswordPage = () => {
 
   const handleForgotPassword = async () => {
     try {
+      setLoading(true);
+
       const response = await AxiosService.post("/user/forgot-password", {
         email,
       });
       console.log(response.data);
+
       if (response.data.message) {
         toast.success(response.data.message, {
           position: toast.POSITION.TOP_CENTER,
         });
       }
+
       navigate("/reset-password");
     } catch (error) {
       console.error(error.response.data);
+
       if (error.response.data.message) {
         toast.error(error.response.data.message, {
           position: toast.POSITION.TOP_CENTER,
@@ -56,6 +63,8 @@ const ForgotPasswordPage = () => {
           position: toast.POSITION.TOP_CENTER,
         });
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -96,8 +105,9 @@ const ForgotPasswordPage = () => {
           variant='contained'
           onClick={handleForgotPassword}
           style={{ marginTop: "20px" }}
+          disabled={loading}
         >
-          Reset Password
+          {loading ? <CircularProgress size={24} /> : "Reset Password"}
         </Button>
 
         <p style={{ marginTop: "20px" }}>

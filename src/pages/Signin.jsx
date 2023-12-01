@@ -15,6 +15,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Box from "@mui/material/Box";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const darkTheme = createTheme({
   palette: {
@@ -34,6 +35,7 @@ const darkTheme = createTheme({
 const Signin = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const initialValues = {
     email: "",
@@ -49,6 +51,7 @@ const Signin = () => {
 
   const handleSignin = async (values) => {
     try {
+      setLoading(true);
       const response = await AxiosService.post("/user/signin", values);
       console.log(response.data);
 
@@ -80,6 +83,8 @@ const Signin = () => {
           });
         }
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -156,8 +161,9 @@ const Signin = () => {
               variant='contained'
               type='submit'
               style={{ marginTop: "20px" }}
+              disabled={loading}
             >
-              Signin
+              {loading ? <CircularProgress size={24} /> : "Signin"}
             </Button>
             <p style={{ marginTop: "20px" }}>
               <Link to='/forgot-password'>Forgot Password?</Link>
