@@ -65,20 +65,23 @@ const Signin = () => {
     } catch (error) {
       console.error(error.response.data);
 
-      if (error.response && error.response.status === 401) {
-        toast.error(error.response.data.message, {
-          position: toast.POSITION.TOP_CENTER,
-        });
-      } else {
-        toast.error("Failed to sign in. Please try again.", {
-          position: toast.POSITION.TOP_CENTER,
-        });
+      if (error.response) {
+        if (error.response.status === 401) {
+          toast.error(error.response.data.message, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        } else if (error.response.status === 404) {
+          toast.error("User not found. Please check your email.", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        } else {
+          toast.error("Failed to sign in. Please try again.", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
       }
     }
   };
-  
-  
-  
 
   return (
     <ThemeProvider theme={darkTheme}>
