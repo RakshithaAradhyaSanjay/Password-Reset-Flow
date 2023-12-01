@@ -55,26 +55,28 @@ const Signin = () => {
       const { message, token, userData } = response.data;
 
       if (message) {
-        if (response.status >= 200 && response.status < 300) {
-          toast.success(message, {
-            position: toast.POSITION.TOP_CENTER,
-          });
-          sessionStorage.setItem("token", token);
-          sessionStorage.setItem("userData", JSON.stringify(userData));
-          navigate("/home");
-        } else if (response.status >= 400) {
-          toast.error(message, {
-            position: toast.POSITION.TOP_CENTER,
-          });
-        }
+        toast.success(message, {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        sessionStorage.setItem("token", token);
+        sessionStorage.setItem("userData", JSON.stringify(userData));
+        navigate("/home");
       }
     } catch (error) {
       console.error(error.response.data);
-      toast.error("Failed to sign in. Please try again.", {
-        position: toast.POSITION.TOP_CENTER,
-      });
+
+      if (error.response && error.response.status === 401) {
+        toast.error(error.response.data.message, {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      } else {
+        toast.error("Failed to sign in. Please try again.", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
     }
   };
+  
   
   
 
