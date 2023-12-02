@@ -14,6 +14,10 @@ app.use(cors());
 app.use(express.json());
 app.use("/", AppRouter);
 
+app.get("/", (req, res) => {
+  res.send("Welcome to the Server! 🌐");
+});
+
 mongoose
   .connect(`${process.env.DB_URL}/${process.env.DB_NAME}`)
   .then(() => {
