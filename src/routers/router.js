@@ -1,4 +1,4 @@
-/** @format */
+
 
 import express from "express";
 import UserRoutes from "./User.router.js";

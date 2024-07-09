@@ -1,4 +1,3 @@
-/** @format */
 
 import express from "express";
 import AppRouter from "./src/routers/router.js";
@@ -19,7 +18,7 @@ app.get("/", (req, res) => {
 });
 
 mongoose
-  .connect(`${process.env.DB_URL}/${process.env.DB_NAME}`)
+  .connect(`$localhost:27017`)
   .then(() => {
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);

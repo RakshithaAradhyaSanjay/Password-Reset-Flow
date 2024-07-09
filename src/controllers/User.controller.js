@@ -1,4 +1,4 @@
-/** @format */
+
 
 import userModel from "../models/User.models.js";
 import auth from "../common/auth.js";
